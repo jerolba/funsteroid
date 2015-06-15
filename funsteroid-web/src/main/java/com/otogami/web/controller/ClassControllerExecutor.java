@@ -22,6 +22,7 @@ public class ClassControllerExecutor {
 	
 	private InstanceFactory instanceFactory;
 	private ClassExplorer classExplorer;
+	private ParameterBinder binder=new ParameterBinder();
 	
 	@Inject
 	public ClassControllerExecutor(InstanceFactory instanceFactory, ClassExplorer classExplorer){
@@ -38,7 +39,8 @@ public class ClassControllerExecutor {
 		
 		Map<String,Object> pathParam=classController.getParams();
 		try {
-			Object res=method.invoke(controller,createArgs(request,response,pathParam,method,paramsInfo));
+			Object[] args = createArgs(request,response,pathParam,method,paramsInfo);
+			Object res=method.invoke(controller,args);
 			return (Result) res;
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
@@ -64,7 +66,8 @@ public class ClassControllerExecutor {
 			}else{
 				value=extractParamFromServlet(request, response, bindParamInfo);
 			}
-			params[cont]=value;
+			Object p=binder.convert(value,bindParamInfo.getParamType());
+			params[cont]=p;
 			cont++;
 		}
 		return params;
