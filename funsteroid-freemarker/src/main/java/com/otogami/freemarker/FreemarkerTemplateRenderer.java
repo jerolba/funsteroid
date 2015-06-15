@@ -7,9 +7,7 @@ import java.io.Writer;
 import java.util.Map;
 
 import javax.inject.Inject;
-
-
-
+import javax.inject.Provider;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -17,10 +15,10 @@ import freemarker.template.TemplateException;
 
 public class FreemarkerTemplateRenderer implements TemplateRendererInterface {
 
-	private Configuration configuration;
+	private Provider<Configuration> configuration;
 
 	@Inject
-	public FreemarkerTemplateRenderer(Configuration configuration){
+	public FreemarkerTemplateRenderer(Provider<Configuration> configuration){
 		this.configuration=configuration;
 	}
 
@@ -33,7 +31,7 @@ public class FreemarkerTemplateRenderer implements TemplateRendererInterface {
 	@Override
 	public void render(String template, Map<String,Object> model, Writer writer){
 		try {
-			Template tpl=configuration.getTemplate(template);
+			Template tpl=configuration.get().getTemplate(template);
 			tpl.process(model,writer);
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -3,6 +3,8 @@ package com.otogami.freemarker.config;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.inject.Provider;
+
 import com.otogami.freemarker.FreemarkerTemplateRenderer;
 import com.otogami.freemarker.GlobalVariables;
 import com.otogami.freemarker.TemplateRendererInterface;
@@ -23,7 +25,7 @@ public class FunsteroidFreemarkerConfiguration extends Configuration {
 	public FunsteroidFreemarkerConfiguration(GlobalVariables globalVariables, FunsteroidMacrosRegister funsteroidMacrosRegister, ViewletFactory viewletFactory){
 		super(DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
 		this.viewletFactory=viewletFactory;
-		this.templateRenderer=new FreemarkerTemplateRenderer(this);
+		this.templateRenderer=new FreemarkerTemplateRenderer(()->FunsteroidFreemarkerConfiguration.this);
 		globalVariables.addGlobalVariables(this);
 		funsteroidMacrosRegister.register(this);
 	}
