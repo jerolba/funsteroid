@@ -17,7 +17,7 @@ public class SimpleMapResolver implements RouteResolver {
 	private ControllerHolder holder=null;
 
 	public SimpleMapResolver(String route, Class<?> controller) {
-		this(route, null, controller, null);
+		this(route, null, controller, (String)null);
 	}
 
 	public SimpleMapResolver(String route, Class<?> controller, String method) {
@@ -25,7 +25,7 @@ public class SimpleMapResolver implements RouteResolver {
 	}
 
 	public SimpleMapResolver(String route, String httpMethod, Class<?> controller) {
-		this(route, httpMethod, controller, null);
+		this(route, httpMethod, controller, (String) null);
 	}
 
 	public SimpleMapResolver(String route, String httpMethod, Class<?> controller, String method) {
@@ -37,6 +37,12 @@ public class SimpleMapResolver implements RouteResolver {
 		}else{
 			m=ReflectionUtil.findFirstMethodWith(controller,HttpMethod.GET);
 		}
+		this.httpMethod = httpMethod;
+		this.route = route;
+		holder=new ControllerHolder(controller, m);
+	}
+	
+	public SimpleMapResolver(String route, String httpMethod, Class<?> controller, Method m) {
 		this.httpMethod = httpMethod;
 		this.route = route;
 		holder=new ControllerHolder(controller, m);

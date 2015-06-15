@@ -13,6 +13,7 @@ import javax.ws.rs.HttpMethod;
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 
@@ -103,5 +104,17 @@ public class ReflectionUtil {
 			}
 		}
 		return info;
+	}
+	
+	public static String getPathAnnotation(Annotation annotation){
+		if (annotation!=null){
+			Path path=((Path)annotation);
+			String beginsWith=path.value();
+			if (!beginsWith.startsWith("/")){
+				beginsWith="/"+beginsWith;
+			}
+			return beginsWith;
+		}
+		return "";
 	}
 }
