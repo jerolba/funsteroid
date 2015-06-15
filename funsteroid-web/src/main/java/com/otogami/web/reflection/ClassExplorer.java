@@ -10,16 +10,16 @@ import javax.inject.Singleton;
 @Singleton
 public class ClassExplorer {
 
-	private Map<Method, List<BindParamInfo>> classInfoReporitory=new ConcurrentHashMap<Method, List<BindParamInfo>>();
+	private Map<Method, List<BindParamInfo>> methodInfoReporitory=new ConcurrentHashMap<Method, List<BindParamInfo>>();
 	
 	public ClassExplorer(){
 	}
 	
 	public List<BindParamInfo> getMethodParams(Method method){
-		List<BindParamInfo> paramsInfo = classInfoReporitory.get(method);
+		List<BindParamInfo> paramsInfo = methodInfoReporitory.get(method);
 		if (paramsInfo==null){
 			paramsInfo=ReflectionUtil.extractParamsInfo(method);
-			classInfoReporitory.put(method, paramsInfo);
+			methodInfoReporitory.put(method, paramsInfo);
 		}
 		return paramsInfo;
 	}
