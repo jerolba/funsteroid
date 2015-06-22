@@ -28,7 +28,7 @@ public class ChainFilterExecutor {
 		}else{
 			chainFilter=new FinalChainElement();
 		}
-			
+		System.out.println("Executing "+chainFilter);
 		Result res=chainFilter.doFilter(classController, request, response);
 		res.accept(new ResultDispatcher(injector,response));
 	}
