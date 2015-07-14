@@ -8,7 +8,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 import com.otogami.web.InstanceFactory;
-import com.otogami.web.plug.JsonRenderer;
+import com.otogami.web.JsonRenderer;
 import com.otogami.web.view.DirectWrite;
 import com.otogami.web.view.TemplateView;
 

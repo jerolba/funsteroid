@@ -1,4 +1,4 @@
-package com.otogami.web.plug;
+package com.otogami.web;
 
 import java.io.OutputStream;
 

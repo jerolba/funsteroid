@@ -32,6 +32,7 @@
 		<module>funsteroid-freemarker</module>
 		<module>funsteroid-web</module>
 		<module>funsteroid-core</module>
+		<module>funsteroid-jackson</module>
 	</modules>
 
 	<build>
