@@ -33,6 +33,7 @@
 		<module>funsteroid-web</module>
 		<module>funsteroid-core</module>
 		<module>funsteroid-jackson</module>
+		<module>funsteroid-guifreejack</module>
 	</modules>
 
 	<build>

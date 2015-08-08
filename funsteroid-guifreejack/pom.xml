@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.otogami</groupId>
+		<artifactId>funsteroid</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>funsteroid-guifreejack</artifactId>
+	<name>Funsteroid with Guice Freemarker and Jackson</name>
+	<description>Funsteroid with Guice Freemarker and Jackson config module</description>
+	<properties>
+		<guice.version>4.0</guice.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>com.otogami</groupId>
+			<artifactId>funsteroid-freemarker</artifactId>
+			<version>${funsteroid.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.otogami</groupId>
+			<artifactId>funsteroid-jackson</artifactId>
+			<version>${funsteroid.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.otogami</groupId>
+			<artifactId>funsteroid-web</artifactId>
+			<version>${funsteroid.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.inject.extensions</groupId>
+			<artifactId>guice-servlet</artifactId>
+			<version>${guice.version}</version>
+		</dependency>
+	</dependencies>
+</project>
