@@ -6,7 +6,10 @@ import java.util.List;
 
 import javax.ws.rs.HttpMethod;
 
+import com.otogami.web.controller.ClassControllerHolder;
 import com.otogami.web.controller.ControllerHolder;
+import com.otogami.web.controller.LambdaController;
+import com.otogami.web.controller.LambdaControllerHolder;
 import com.otogami.web.reflection.ReflectionUtil;
 
 public class SimpleMapResolver implements RouteResolver {
@@ -27,6 +30,12 @@ public class SimpleMapResolver implements RouteResolver {
 	public SimpleMapResolver(String route, String httpMethod, Class<?> controller) {
 		this(route, httpMethod, controller, (String) null);
 	}
+	
+	public SimpleMapResolver(String route, String httpMethod, LambdaController controller){
+		this.httpMethod = httpMethod;
+		this.route = route;
+		holder=new LambdaControllerHolder(controller);
+	}
 
 	public SimpleMapResolver(String route, String httpMethod, Class<?> controller, String method) {
 		Method m=null;
@@ -39,13 +48,13 @@ public class SimpleMapResolver implements RouteResolver {
 		}
 		this.httpMethod = httpMethod;
 		this.route = route;
-		holder=new ControllerHolder(controller, m);
+		holder=new ClassControllerHolder(controller, m);
 	}
 	
 	public SimpleMapResolver(String route, String httpMethod, Class<?> controller, Method m) {
 		this.httpMethod = httpMethod;
 		this.route = route;
-		holder=new ControllerHolder(controller, m);
+		holder=new ClassControllerHolder(controller, m);
 	}
 
 	@Override

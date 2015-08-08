@@ -12,13 +12,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import com.otogami.web.InstanceFactory;
+import com.otogami.web.controller.ControllerHolder.HolderType;
 import com.otogami.web.reflection.BindParamInfo;
 import com.otogami.web.reflection.ClassExplorer;
 import com.otogami.web.results.Result;
 
 @Singleton
 public class ClassControllerExecutor {
-
 	
 	private InstanceFactory instanceFactory;
 	private ClassExplorer classExplorer;
@@ -30,26 +30,33 @@ public class ClassControllerExecutor {
 		this.classExplorer=classExplorer;
 	}
 	
-	public Result execute(ControllerHolder classController,ServletRequest request, ServletResponse response){
-		Class<?> controllerClass=classController.getClassControl();
-		Method method=classController.getMethodClass();
-		List<BindParamInfo> paramsInfo = classExplorer.getMethodParams(method);
-		
-		Object controller=instanceFactory.getInstance(controllerClass);
-		
-		Map<String,Object> pathParam=classController.getParams();
-		try {
-			Object[] args = createArgs(request,response,pathParam,method,paramsInfo);
-			Object res=method.invoke(controller,args);
-			return (Result) res;
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+	public Result execute(ControllerHolder controllerHolder,ServletRequest request, ServletResponse response){
+		if (controllerHolder.getType()==HolderType.ClassHolder){
+			ClassControllerHolder classController=(ClassControllerHolder) controllerHolder;
+			Class<?> controllerClass=classController.getClassControl();
+			Method method=classController.getMethodClass();
+			List<BindParamInfo> paramsInfo = classExplorer.getMethodParams(method);
+			
+			Object controller=instanceFactory.getInstance(controllerClass);
+			
+			Map<String,Object> pathParam=classController.getParams();
+			try {
+				Object[] args = createArgs(request,response,pathParam,method,paramsInfo);
+				Object res=method.invoke(controller,args);
+				return (Result) res;
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		}else if (controllerHolder.getType()==HolderType.LambdaHolder){
+			LambdaControllerHolder lambdaController=(LambdaControllerHolder) controllerHolder;
+			return lambdaController.getController().execute(request, response);
 		}
 		return null;
+		
 	}
 	
 	
