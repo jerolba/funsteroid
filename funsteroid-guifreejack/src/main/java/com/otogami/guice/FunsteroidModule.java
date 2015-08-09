@@ -1,0 +1,82 @@
+package com.otogami.guice;
+
+import javax.inject.Provider;
+
+import com.google.inject.AbstractModule;
+import com.otogami.freemarker.FreemarkerModule;
+import com.otogami.freemarker.MacroRegister;
+import com.otogami.jackson.JacksonModule;
+import com.otogami.web.InstanceFactory;
+import com.otogami.web.funfilter.FilterConfiguration;
+import com.otogami.web.resolver.RouteMappingConfig;
+
+public class FunsteroidModule extends AbstractModule {
+
+	private Class<? extends Provider<? extends FilterConfiguration>> filter;
+	private FilterConfiguration filterConfiguration;
+	
+	private Class<? extends Provider<? extends RouteMappingConfig>> route;
+
+	private Class<? extends MacroRegister> macroRegister;
+	private MacroRegister macroRegisterInstance;
+	
+	public FunsteroidModule(){
+		
+	}
+	
+	public FunsteroidModule withFilter(Class<? extends Provider<? extends FilterConfiguration>> filter){
+		this.filter=filter;
+		return this;
+	}
+	
+	public FunsteroidModule withFilter(FilterConfiguration filterConfiguration){
+		this.filterConfiguration=filterConfiguration;
+		return this;
+	}
+
+	
+	public FunsteroidModule withRoutes(Class<? extends Provider<? extends RouteMappingConfig>> route){
+		this.route=route;
+		return this;
+	}
+	
+	public FunsteroidModule withMacros(Class<? extends MacroRegister> macroRegister){
+		this.macroRegister=macroRegister;
+		return this;
+	}
+	
+	public FunsteroidModule withMacros(MacroRegister macroRegisterInstance){
+		this.macroRegisterInstance=macroRegisterInstance;
+		return this;
+	}
+
+	
+	public FunsteroidModule(Class<? extends Provider<? extends FilterConfiguration>> filter,
+			Class<? extends Provider<? extends RouteMappingConfig>> route,
+			Class<? extends MacroRegister> macroRegister){
+		this.filter=filter;
+		this.route=route;
+		this.macroRegister=macroRegister;
+	}
+	
+	@Override
+	protected void configure() {
+		bind(InstanceFactory.class).to(GuiceInstanceFactory.class).asEagerSingleton();
+		if (filter!=null){
+			bind(FilterConfiguration.class).toProvider(filter);
+		}else if (filterConfiguration!=null){
+			bind(FilterConfiguration.class).toInstance(filterConfiguration);
+		}else{
+			bind(FilterConfiguration.class).toInstance(new FilterConfiguration());
+		}
+		if (route!=null){
+			bind(RouteMappingConfig.class).toProvider(route);
+		}else{
+			bind(RouteMappingConfig.class).toProvider(()->new RouteMappingConfig());
+		}
+		
+		install(new FreemarkerModule(macroRegister));
+		install(new JacksonModule());
+	}
+}
+

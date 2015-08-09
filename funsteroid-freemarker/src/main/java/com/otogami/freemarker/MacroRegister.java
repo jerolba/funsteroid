@@ -4,6 +4,6 @@ import freemarker.template.Configuration;
 
 public interface MacroRegister {
 
-	void register(Configuration cfg);
+	void accept(Configuration cfg);
 
 }

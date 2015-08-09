@@ -18,7 +18,7 @@ public class FunsteroidMacrosRegister implements MacroRegister{
 	private InstanceFactory injector;
 	
 	@Override
-	public void register(Configuration cfg) {
+	public void accept(Configuration cfg) {
 		cfg.setSharedVariable("silence", new SilentExceptionMacro());
 		cfg.setSharedVariable("trace", new TraceMacro());
 		cfg.setSharedVariable("decorate", injector.getInstance(DecoratorMacro.class));

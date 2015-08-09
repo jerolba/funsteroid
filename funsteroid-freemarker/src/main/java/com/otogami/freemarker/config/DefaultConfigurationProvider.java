@@ -31,7 +31,7 @@ public class DefaultConfigurationProvider implements Provider<Configuration> {
 		cfg.setNumberFormat("0");
 		cfg.setClassForTemplateLoading(getClass(), "/tpl");
 		if (macroRegister!=null) {
-			macroRegister.register(cfg);
+			macroRegister.accept(cfg);
 		}
 		return cfg;
 	}
