@@ -8,6 +8,7 @@ import com.otogami.freemarker.MacroRegister;
 import com.otogami.jackson.JacksonModule;
 import com.otogami.web.InstanceFactory;
 import com.otogami.web.funfilter.FilterConfiguration;
+import com.otogami.web.resolver.ResolverChain;
 import com.otogami.web.resolver.RouteMappingConfig;
 
 public class FunsteroidModule extends AbstractModule {
@@ -15,7 +16,7 @@ public class FunsteroidModule extends AbstractModule {
 	private Class<? extends Provider<? extends FilterConfiguration>> filter;
 	private FilterConfiguration filterConfiguration;
 	
-	private Class<? extends Provider<? extends RouteMappingConfig>> route;
+	private Class<? extends Provider<? extends ResolverChain>> route;
 
 	private Class<? extends MacroRegister> macroRegister;
 	private MacroRegister macroRegisterInstance;
@@ -35,7 +36,7 @@ public class FunsteroidModule extends AbstractModule {
 	}
 
 	
-	public FunsteroidModule withRoutes(Class<? extends Provider<? extends RouteMappingConfig>> route){
+	public FunsteroidModule withRoutes(Class<? extends Provider<? extends ResolverChain>> route){
 		this.route=route;
 		return this;
 	}
@@ -52,7 +53,7 @@ public class FunsteroidModule extends AbstractModule {
 
 	
 	public FunsteroidModule(Class<? extends Provider<? extends FilterConfiguration>> filter,
-			Class<? extends Provider<? extends RouteMappingConfig>> route,
+			Class<? extends Provider<? extends ResolverChain>> route,
 			Class<? extends MacroRegister> macroRegister){
 		this.filter=filter;
 		this.route=route;
@@ -70,9 +71,9 @@ public class FunsteroidModule extends AbstractModule {
 			bind(FilterConfiguration.class).toInstance(new FilterConfiguration());
 		}
 		if (route!=null){
-			bind(RouteMappingConfig.class).toProvider(route);
+			bind(ResolverChain.class).toProvider(route);
 		}else{
-			bind(RouteMappingConfig.class).toProvider(()->new RouteMappingConfig());
+			bind(ResolverChain.class).toProvider(()->new ResolverChain());
 		}
 		
 		install(new FreemarkerModule(macroRegister));

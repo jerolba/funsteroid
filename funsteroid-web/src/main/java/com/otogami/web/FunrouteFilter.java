@@ -17,7 +17,7 @@ import com.otogami.web.controller.ControllerHolder;
 import com.otogami.web.funfilter.FilterChainElement;
 import com.otogami.web.funfilter.FilterConfiguration;
 import com.otogami.web.funfilter.FilterFinder;
-import com.otogami.web.resolver.RouteMappingConfig;
+import com.otogami.web.resolver.ResolverChain;
 import com.otogami.web.resolver.RouteResolver;
 import com.otogami.web.resolver.RouterTrace;
 
@@ -33,7 +33,7 @@ public class FunrouteFilter implements Filter {
 	private ChainFilterExecutor executor;
 	
 	@Inject 
-	private Provider<RouteMappingConfig> routeConfigProvider;
+	private Provider<ResolverChain> routeConfigProvider;
 	
 	@Inject 
 	private Provider<FilterConfiguration> filterConfigProvider; 
@@ -63,8 +63,7 @@ public class FunrouteFilter implements Filter {
 	}
 
 	private void loadRoutesConfig(){
-		RouteMappingConfig mapping = routeConfigProvider.get();
-		centralResolver=mapping.getConfig();
+		centralResolver=routeConfigProvider.get();
 		System.out.println(RouterTrace.trace(centralResolver.explain()));
 	}
 	
