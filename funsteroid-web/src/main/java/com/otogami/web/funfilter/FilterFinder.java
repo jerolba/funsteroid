@@ -1,7 +1,7 @@
 package com.otogami.web.funfilter;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -22,25 +22,18 @@ public class FilterFinder {
 	}
 	
 	public FilterChainElement getFilters(String url){
-		List<Class<? extends Funfilter>> enableds=new ArrayList<Class<? extends Funfilter>>();
-		for (FilterResolver resolver : resolvers) {
-			Class<? extends Funfilter> filter = resolver.filter(url);
-			if (filter!=null){
-				enableds.add(filter);
-			}
-		}
+		List<Class<? extends Funfilter>> enableds=resolvers.stream().map(resolver-> resolver.filter(url)).filter(c->c!=null).collect(Collectors.toList());
 		if (enableds.size()>0){
-			FilterInstance instance=new FilterInstance(enableds);
-			return instance.build();
+			return new FilterChainBuilder(enableds).build();
 		}
 		return null;
 	}
 	
-	private class FilterInstance{
+	private class FilterChainBuilder{
 		
 		public List<Class<? extends Funfilter>> items;
 		
-		public FilterInstance(List<Class<? extends Funfilter>> items){
+		public FilterChainBuilder(List<Class<? extends Funfilter>> items){
 			this.items=items;
 		}
 		
@@ -53,8 +46,7 @@ public class FilterFinder {
 				return null;
 			}
 			FilterChainElement next=create(i+1);
-			FilterChainElement el=new FilterChainElement(injector.getInstance(items.get(i)),next);
-			return el;
+			return new FilterChainElement(injector.getInstance(items.get(i)),next);
 		}
 	}
 }

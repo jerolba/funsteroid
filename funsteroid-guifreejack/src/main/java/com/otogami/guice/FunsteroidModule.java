@@ -9,7 +9,6 @@ import com.otogami.jackson.JacksonModule;
 import com.otogami.web.InstanceFactory;
 import com.otogami.web.funfilter.FilterConfiguration;
 import com.otogami.web.resolver.ResolverChain;
-import com.otogami.web.resolver.RouteMappingConfig;
 
 public class FunsteroidModule extends AbstractModule {
 
