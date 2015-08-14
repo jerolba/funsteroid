@@ -61,7 +61,9 @@ public class FunsteroidModule extends AbstractModule {
 	
 	@Override
 	protected void configure() {
+		
 		bind(InstanceFactory.class).to(GuiceInstanceFactory.class).asEagerSingleton();
+		
 		if (filter!=null){
 			bind(FilterConfiguration.class).toProvider(filter);
 		}else if (filterConfiguration!=null){
@@ -75,7 +77,11 @@ public class FunsteroidModule extends AbstractModule {
 			bind(ResolverChain.class).toProvider(()->new ResolverChain());
 		}
 		
-		install(new FreemarkerModule(macroRegister));
+		if (macroRegisterInstance!=null){
+			install(new FreemarkerModule(macroRegisterInstance));
+		}else{
+			install(new FreemarkerModule(macroRegister));
+		}
 		install(new JacksonModule());
 	}
 }
