@@ -2,13 +2,18 @@ package com.otogami.web.reflection;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
+import java.lang.reflect.Parameter;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.HEAD;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
@@ -67,23 +72,23 @@ public class ReflectionUtil {
 		if (method.getAnnotation(OPTIONS.class)!=null){
 			return HttpMethod.OPTIONS;
 		}
+		if (method.getAnnotation(HEAD.class)!=null){
+			return HttpMethod.HEAD;
+		}		
 		return null;
 	}
 	
 	public static List<BindParamInfo> extractParamsInfo(Method method) {
-		Annotation[][] params=method.getParameterAnnotations();
-		Class<?>[] paramsType=method.getParameterTypes();
-		List<BindParamInfo> paramsMetadata=new ArrayList<BindParamInfo>(); 
-		for (int i=0;i<params.length;i++) {
-			BindParamInfo info=extractParameterInfo(params[i],paramsType[i]);
-			paramsMetadata.add(info);
-		}
-		return paramsMetadata;
+		return Stream.of(method.getParameters())
+				.map(ReflectionUtil::extractParameterInfo)
+				.collect(Collectors.toList());
 	}
 
-	private static BindParamInfo extractParameterInfo(Annotation[] annotations, Class<?> paramType){
+	private static BindParamInfo extractParameterInfo(Parameter parameter){
+		Class<?> paramType = parameter.getType();
 		BindParamInfo info=new BindParamInfo();
 		info.setParamType(paramType);
+		Annotation[] annotations = parameter.getAnnotations();
 		for (Annotation annotation : annotations) {
 			if (annotation instanceof QueryParam){
 				String id=((QueryParam)annotation).value();
@@ -102,6 +107,16 @@ public class ReflectionUtil {
 				info.setBindFrom(BindFrom.FORM);
 				info.setParamId(id);
 			}
+		}
+		if (info.getBindFrom()==null){
+			if (paramType.isAssignableFrom(ServletRequest.class)){
+				info.setBindFrom(BindFrom.REQUEST);
+			}else if (paramType.isAssignableFrom(ServletResponse.class)){
+				info.setBindFrom(BindFrom.RESPONSE);
+			}
+		}
+		if (info.getParamId()==null){
+			info.setParamId(parameter.getName());
 		}
 		return info;
 	}

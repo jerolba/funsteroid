@@ -12,16 +12,8 @@ public class ClassExplorer {
 
 	private Map<Method, List<BindParamInfo>> methodInfoReporitory=new ConcurrentHashMap<Method, List<BindParamInfo>>();
 	
-	public ClassExplorer(){
-	}
-	
 	public List<BindParamInfo> getMethodParams(Method method){
-		List<BindParamInfo> paramsInfo = methodInfoReporitory.get(method);
-		if (paramsInfo==null){
-			paramsInfo=ReflectionUtil.extractParamsInfo(method);
-			methodInfoReporitory.put(method, paramsInfo);
-		}
-		return paramsInfo;
+		return methodInfoReporitory.computeIfAbsent(method,(m)->ReflectionUtil.extractParamsInfo(m));
 	}
 
 }

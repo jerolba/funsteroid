@@ -8,6 +8,6 @@ import com.otogami.web.results.Result;
 
 public interface Funfilter {
 
-	public Result doFilter(ControllerHolder classController, ServletRequest request, ServletResponse response, FilterChainElement chain);
+	Result doFilter(ControllerHolder classController, ServletRequest request, ServletResponse response, FilterChainElement chain);
 	
 }

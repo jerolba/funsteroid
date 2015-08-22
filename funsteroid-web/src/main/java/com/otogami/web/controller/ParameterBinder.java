@@ -8,7 +8,7 @@ import java.util.function.Function;
 public class ParameterBinder {
 
 	private Map<String,Function<String,Object>> primitives=new HashMap<>();
-	private Map<Class,Function<String,Object>> binders=new HashMap<>();
+	private Map<Class<?>,Function<String,Object>> binders=new HashMap<>();
 	
 	public ParameterBinder(){
 		binders.put(String.class,  (v) -> v);
@@ -88,7 +88,7 @@ public class ParameterBinder {
 		
 	}
 	
-	public Object convert(Object value, Class paramType) {
+	public Object convert(Object value, Class<?> paramType) {
 		if (value!=null && !(value instanceof String)){
 			return value;
 		}

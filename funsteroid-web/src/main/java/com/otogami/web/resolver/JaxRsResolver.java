@@ -6,7 +6,9 @@ import java.util.List;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HEAD;
 import javax.ws.rs.HttpMethod;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -18,11 +20,11 @@ public class JaxRsResolver implements RouteResolver {
 
 	private ResolverChain chain;
 	
-	public JaxRsResolver(Class clasz){
+	public JaxRsResolver(Class<?> clasz){
 		parseClass(clasz);
 	}
 	
-	private void parseClass(Class clasz){
+	private void parseClass(Class<?> clasz){
 		Annotation path = clasz.getAnnotation(Path.class);
 		String beginsWith=ReflectionUtil.getPathAnnotation(path);
 		if (beginsWith.length()==1){
@@ -41,6 +43,12 @@ public class JaxRsResolver implements RouteResolver {
 			}
 			if (httpMethod==null){
 				httpMethod = getFor(method, DELETE.class, HttpMethod.DELETE);
+			}
+			if (httpMethod==null){
+				httpMethod = getFor(method, OPTIONS.class, HttpMethod.OPTIONS);
+			}
+			if (httpMethod==null){
+				httpMethod = getFor(method, HEAD.class, HttpMethod.HEAD);
 			}
 			if (httpMethod!=null){
 				Annotation pathMethod = method.getAnnotation(Path.class);

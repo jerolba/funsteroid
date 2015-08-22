@@ -6,7 +6,7 @@ import com.otogami.web.reflection.PackageExplorer;
 
 public class JaxRsPackageScanResolver extends ResolverChain {
 
-	public JaxRsPackageScanResolver(Class exampleClass){
+	public JaxRsPackageScanResolver(Class<?> exampleClass){
 		this(exampleClass.getPackage().getName());
 	}
 	

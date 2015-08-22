@@ -5,7 +5,7 @@ public class BindParamInfo {
 
 	private BindFrom bindFrom;
 	private String paramId;
-	private Class paramType;
+	private Class<?> paramType;
 	
 	public BindFrom getBindFrom() {
 		return bindFrom;
@@ -19,10 +19,10 @@ public class BindParamInfo {
 	public void setParamId(String paramId) {
 		this.paramId = paramId;
 	}
-	public Class getParamType() {
+	public Class<?> getParamType() {
 		return paramType;
 	}
-	public void setParamType(Class paramType) {
+	public void setParamType(Class<?> paramType) {
 		this.paramType = paramType;
 	}
 	
