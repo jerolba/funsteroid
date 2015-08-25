@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -20,12 +21,21 @@ public class FunrouteServlet extends HttpServlet {
 
 	@Override
 	public void init(ServletConfig filterConfig) throws ServletException {
+		super.init(filterConfig);
 		executor.init();
 	}
 	
 	@Override
 	public void service(ServletRequest request, ServletResponse response) throws ServletException, IOException {
-		executor.service(request, response);
+		boolean served = executor.service(request, response);
+		if (!served){
+			delegateToDefaultServlet(request, response);
+		}
+	}
+	
+	private void delegateToDefaultServlet(ServletRequest request, ServletResponse response) throws ServletException, IOException{
+		RequestDispatcher rd = getServletContext().getNamedDispatcher("default");
+		rd.forward(request, response);
 	}
 
 	@Override
