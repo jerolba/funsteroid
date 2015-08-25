@@ -16,6 +16,7 @@ public class FunsteroidModule extends AbstractModule {
 	private FilterConfiguration filterConfiguration;
 	
 	private Class<? extends Provider<? extends ResolverChain>> route;
+	private Provider<? extends ResolverChain> routeProvider;
 
 	private Class<? extends MacroRegister> macroRegister;
 	private MacroRegister macroRegisterInstance;
@@ -37,6 +38,11 @@ public class FunsteroidModule extends AbstractModule {
 	
 	public FunsteroidModule withRoutes(Class<? extends Provider<? extends ResolverChain>> route){
 		this.route=route;
+		return this;
+	}
+	
+	public FunsteroidModule withRoutes(Provider<? extends ResolverChain> routeProvider){
+		this.routeProvider=routeProvider;
 		return this;
 	}
 	
@@ -73,6 +79,8 @@ public class FunsteroidModule extends AbstractModule {
 		}
 		if (route!=null){
 			bind(ResolverChain.class).toProvider(route);
+		}else if (routeProvider!=null){
+			bind(ResolverChain.class).toProvider(routeProvider);
 		}else{
 			bind(ResolverChain.class).toProvider(()->new ResolverChain());
 		}
