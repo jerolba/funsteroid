@@ -9,11 +9,14 @@
 	<artifactId>funsteroid-freemarker</artifactId>
 	<name>Funsteroid Freemarker Renderer</name>
 	<packaging>jar</packaging>
-
+	<properties>
+		<freemarker.version>2.3.23</freemarker.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
+			<version>${freemarker.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.inject</groupId>

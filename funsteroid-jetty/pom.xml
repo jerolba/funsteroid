@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>com.otogami</groupId>
 			<artifactId>funsteroid-guifreejack</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${funsteroid.version}</version>
 		</dependency>
 	</dependencies>
 </project>
