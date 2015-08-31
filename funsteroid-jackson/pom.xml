@@ -8,6 +8,9 @@
 	</parent>
 	<artifactId>funsteroid-jackson</artifactId>
 	<name>Funsteroid Jackson Json Support</name>
+	<properties>
+		<jackson.version>2.6.1</jackson.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>com.otogami</groupId>
@@ -15,9 +18,14 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.7</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
 	</dependencies>
 </project>
