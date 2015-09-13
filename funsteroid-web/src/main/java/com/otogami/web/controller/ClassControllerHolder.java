@@ -14,8 +14,6 @@ public class ClassControllerHolder implements ControllerHolder{
 	
 	private Method methodClass;
 	
-	private String methodName;
-	
 	private Map<String,Object> params=new HashMap<String,Object>();
 	
 	@Override
@@ -51,10 +49,6 @@ public class ClassControllerHolder implements ControllerHolder{
 	
 	public Class<?> getClassControl(){
 		return classControl;
-	}
-	
-	public String getMethodName() {
-		return methodName;
 	}
 	
 	public Method getMethodClass() {
