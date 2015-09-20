@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.otogami</groupId>
+		<artifactId>funsteroid</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>funsteroid-tomcat</artifactId>
+	<name>Funsteroid Tomcat</name>
+	<description>Embedded Tomcat Support</description>
+	<properties>
+		<tomcat.version>8.0.22</tomcat.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>com.otogami</groupId>
+			<artifactId>funsteroid-guifreejack</artifactId>
+			<version>${funsteroid.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>${tomcat.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-util</artifactId>
+			<version>${tomcat.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<version>${tomcat.version}</version>
+		</dependency>
+	</dependencies>
+</project>

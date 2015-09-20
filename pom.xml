@@ -36,6 +36,7 @@
 		<module>funsteroid-jackson</module>
 		<module>funsteroid-guifreejack</module>
 		<module>funsteroid-jetty</module>
+		<module>funsteroid-tomcat</module>
 	</modules>
 
 	<build>
