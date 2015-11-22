@@ -18,6 +18,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import com.google.inject.servlet.GuiceFilter;
 import com.otogami.ServerConfig;
 import com.otogami.guice.FunsteroidModule;
+import com.otogami.guice.GuiceConfigListener;
 
 public class JettyServer extends ServerConfig<JettyServer> {
 	

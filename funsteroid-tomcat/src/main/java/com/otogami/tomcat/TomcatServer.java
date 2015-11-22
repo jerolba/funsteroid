@@ -17,6 +17,7 @@ import org.apache.tomcat.util.descriptor.web.FilterMap;
 import com.google.inject.servlet.GuiceFilter;
 import com.otogami.ServerConfig;
 import com.otogami.guice.FunsteroidModule;
+import com.otogami.guice.GuiceConfigListener;
 
 public class TomcatServer extends ServerConfig<TomcatServer> {
 
