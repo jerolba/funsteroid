@@ -53,6 +53,12 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+			</plugin>
+		</plugins>
 	</build>
 
 	<dependencyManagement>
@@ -93,4 +99,11 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<distributionManagement>
+		<repository>
+			<id>bintray-jerolba-maven</id>
+			<name>jerolba-maven</name>
+			<url>https://api.bintray.com/maven/jerolba/maven/funsteroid/;publish=1</url>
+		</repository>
+	</distributionManagement>
 </project>
