@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.otogami</groupId>
 	<artifactId>funsteroid</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Funsteroid</name>
 	<description>Otogami web framework</description>
@@ -101,9 +101,9 @@
 	</dependencyManagement>
 	<distributionManagement>
 		<repository>
-			<id>bintray-jerolba-maven</id>
-			<name>jerolba-maven</name>
-			<url>https://api.bintray.com/maven/jerolba/maven/funsteroid/;publish=1</url>
+			<id>bintray-jerolba-maven-repo</id>
+			<name>jerolba-maven-repo</name>
+			<url>https://api.bintray.com/maven/jerolba/maven-repo/funsteroid/;publish=1</url>
 		</repository>
 	</distributionManagement>
 </project>

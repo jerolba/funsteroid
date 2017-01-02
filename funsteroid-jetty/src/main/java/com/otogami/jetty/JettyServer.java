@@ -15,6 +15,7 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.webapp.WebAppContext;
 
+import com.google.inject.AbstractModule;
 import com.google.inject.servlet.GuiceFilter;
 import com.otogami.ServerConfig;
 import com.otogami.guice.FunsteroidModule;
@@ -32,6 +33,7 @@ public class JettyServer extends ServerConfig<JettyServer> {
 				.withRoutes(routeProvider)
 				.withMacros(macroRegister)
 				.withMacros(macroRegisterInstance);
+		AbstractModule[] otherModules = this.modules.toArray(new AbstractModule[]{});
 
 		HandlerList handlers = new HandlerList();
 		
@@ -51,7 +53,7 @@ public class JettyServer extends ServerConfig<JettyServer> {
         context.setContextPath("/");
         context.setParentLoaderPriority(true);
         context.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "false");
-        context.addEventListener(new GuiceConfigListener(funsteroidModule));
+        context.addEventListener(new GuiceConfigListener(funsteroidModule, otherModules));
         context.addFilter(GuiceFilter.class, "/*", null);
         handlers.addHandler(resourceHandler);
         handlers.addHandler(context);

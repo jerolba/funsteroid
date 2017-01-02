@@ -14,6 +14,7 @@ import org.apache.catalina.startup.Tomcat;
 import org.apache.tomcat.util.descriptor.web.FilterDef;
 import org.apache.tomcat.util.descriptor.web.FilterMap;
 
+import com.google.inject.AbstractModule;
 import com.google.inject.servlet.GuiceFilter;
 import com.otogami.ServerConfig;
 import com.otogami.guice.FunsteroidModule;
@@ -32,17 +33,16 @@ public class TomcatServer extends ServerConfig<TomcatServer> {
 				.withRoutes(routeProvider)
 				.withMacros(macroRegister)
 				.withMacros(macroRegisterInstance);
-		
+		AbstractModule[] otherModules = this.modules.toArray(new AbstractModule[]{});
 		
 		Context webapp = tomcat.addWebapp("/", getWebAppPath());
-		
 		createGuiceFilter(webapp);
 		
 		webapp.addServletContainerInitializer(new ServletContainerInitializer() {
 			
 			@Override
 			public void onStartup(Set<Class<?>> c, ServletContext ctx) throws ServletException {
-				ctx.addListener(new GuiceConfigListener(funsteroidModule));
+				ctx.addListener(new GuiceConfigListener(funsteroidModule,otherModules));
 			}
 		}, null);
 		

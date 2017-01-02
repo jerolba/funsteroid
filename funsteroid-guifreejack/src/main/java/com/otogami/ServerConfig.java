@@ -1,7 +1,11 @@
 package com.otogami;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Provider;
 
+import com.google.inject.AbstractModule;
 import com.otogami.freemarker.MacroRegister;
 import com.otogami.web.funfilter.FilterConfiguration;
 import com.otogami.web.resolver.ResolverChain;
@@ -20,6 +24,8 @@ public class ServerConfig<T extends ServerConfig>{
 
 	protected Class<? extends MacroRegister> macroRegister;
 	protected MacroRegister macroRegisterInstance;
+	
+	protected List<AbstractModule> modules = new ArrayList<>(); 
 	
 	public T withPort(int port){
 		this.port=port;
@@ -59,5 +65,12 @@ public class ServerConfig<T extends ServerConfig>{
 	public T withResourcesPath(String resourcesPath) {
 		this.resourcesPath=resourcesPath;
 		return (T)this;
+	}
+	
+	public T withModules(AbstractModule ... modules){
+		for (AbstractModule module : modules) {
+			this.modules.add(module);
+		}
+		return (T) this;
 	}
 }
