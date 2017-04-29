@@ -29,7 +29,9 @@ public class ChainFilterExecutor {
 			chainFilter=new FinalChainElement();
 		}
 		Result res=chainFilter.doFilter(classController, request, response);
-		res.accept(new ResultDispatcher(injector,response));
+		if (res!=null) {
+			res.accept(new ResultDispatcher(injector,response));
+		}
 	}
 	
 	public FilterChainElement getFinalChainElement(){

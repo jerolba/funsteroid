@@ -49,7 +49,12 @@ public class ClassControllerExecutor {
 		}else if (controllerHolder.getType()==HolderType.LambdaHolder){
 			LambdaControllerHolder lambdaController=(LambdaControllerHolder) controllerHolder;
 			return lambdaController.getController().execute(request, response);
+		}else if (controllerHolder.getType()==HolderType.LambdaClassHolder){
+			LambdaClassControllerHolder classController=(LambdaClassControllerHolder) controllerHolder;
+			LambdaController controller=instanceFactory.getInstance(classController.getClassController());
+			return controller.execute(request, response);
 		}
+		
 		return null;
 	}
 	

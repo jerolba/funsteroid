@@ -3,9 +3,8 @@ package com.otogami.web.reflection;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -79,9 +78,14 @@ public class ReflectionUtil {
 	}
 	
 	public static List<BindParamInfo> extractParamsInfo(Method method) {
-		return Stream.of(method.getParameters())
-				.map(ReflectionUtil::extractParameterInfo)
-				.collect(Collectors.toList());
+		List<BindParamInfo> res = new ArrayList<>();
+		for (Parameter parameter : method.getParameters()) {
+			res.add(ReflectionUtil.extractParameterInfo(parameter));
+		}
+		return res;
+//		return Stream.of(method.getParameters())
+//				.map(ReflectionUtil::extractParameterInfo)
+//				.collect(Collectors.toList());
 	}
 
 	private static BindParamInfo extractParameterInfo(Parameter parameter){

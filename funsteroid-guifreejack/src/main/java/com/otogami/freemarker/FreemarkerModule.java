@@ -36,7 +36,10 @@ public class FreemarkerModule extends AbstractModule{
 		}else if (macroRegisterInstance!=null){
 			bind(MacroRegister.class).toInstance(macroRegisterInstance);
 		}else{
-			bind(MacroRegister.class).toInstance(cfg->{});
+			bind(MacroRegister.class).toInstance(new MacroRegister() {
+				@Override
+				public void accept(Configuration cfg) {}
+			});
 		}
 	}
 

@@ -11,79 +11,117 @@ public class ParameterBinder {
 	private Map<Class<?>,Function<String,Object>> binders=new HashMap<>();
 	
 	public ParameterBinder(){
-		binders.put(String.class,  (v) -> v);
-		binders.put(Integer.class, (v) -> {
-			try{
-				return new Integer(v);
-			}catch(NumberFormatException e){
-				return null;
+		binders.put(String.class,  new Function<String, Object>() {
+			@Override
+			public Object apply(String v) {
+				return v;
 			}
 		});
-		binders.put(Long.class, (v) -> {
-			try{
-				return new Long(v);
-			}catch(NumberFormatException e){
-				return null;
+		binders.put(Integer.class, new Function<String, Object>() {
+			@Override
+			public Object apply(String v) {
+				try{
+					return new Integer(v);
+				}catch(NumberFormatException e){
+					return null;
+				}
 			}
 		});
-		binders.put(Double.class, (v) -> {
-			try{
-				return new Double(v);
-			}catch(NumberFormatException e){
-				return null;
+		binders.put(Long.class, new Function<String, Object>() {
+			@Override
+			public Object apply(String v) {
+				try{
+					return new Long(v);
+				}catch(NumberFormatException e){
+					return null;
+				}
+			}
+		});
+		binders.put(Double.class, new Function<String, Object>() {
+			@Override
+			public Object apply(String v) {
+				try{
+					return new Double(v);
+				}catch(NumberFormatException e){
+					return null;
+				}
 			}
 		});		
-		binders.put(Float.class, (v) -> {
-			try{
-				return new Float(v);
-			}catch(NumberFormatException e){
-				return null;
+		binders.put(Float.class, new Function<String, Object>() {
+			@Override
+			public Object apply(String v) {
+				try{
+					return new Float(v);
+				}catch(NumberFormatException e){
+					return null;
+				}
 			}
 		});				
-		binders.put(BigDecimal.class, (v) -> {
-			try{
-				return new BigDecimal(v);
-			}catch(NumberFormatException e){
-				return null;
+		binders.put(BigDecimal.class, new Function<String, Object>() {
+			@Override
+			public Object apply(String v) {
+				try{
+					return new BigDecimal(v);
+				}catch(NumberFormatException e){
+					return null;
+				}
 			}
 		});
-		binders.put(Boolean.class, (v) -> {
-			return Boolean.getBoolean(v);
+		binders.put(Boolean.class, new Function<String, Object>() {
+			@Override
+			public Object apply(String v) {
+				return Boolean.getBoolean(v);
+			}
 		});
 
 		
-		primitives.put("int", (v) -> {
-			try{
-				return Integer.parseInt(v);
-			}catch(NumberFormatException e){
-				return 0;
+		primitives.put("int", new Function<String, Object>() {
+			@Override
+			public Object apply(String v) {
+				try{
+					return Integer.parseInt(v);
+				}catch(NumberFormatException e){
+					return 0;
+				}
 			}
 		});
-		primitives.put("long", (v) -> {
-			try{
-				return Long.parseLong(v);
-			}catch(NumberFormatException e){
-				return 0L;
+		primitives.put("long", new Function<String, Object>() {
+			@Override
+			public Object apply(String v) {
+				try{
+					return Long.parseLong(v);
+				}catch(NumberFormatException e){
+					return 0L;
+				}
 			}
 		});		
-		primitives.put("double", (v) -> {
-			try{
-				return Double.parseDouble(v);
-			}catch(NumberFormatException e){
-				return 0D;
+		primitives.put("double", new Function<String, Object>() {
+			@Override
+			public Object apply(String v) {
+				try{
+					return Double.parseDouble(v);
+				}catch(NumberFormatException e){
+					return 0D;
+				}
 			}
 		});
 		
-		primitives.put("float", (v) -> {
-			try{
-				return Float.parseFloat(v);
-			}catch(NumberFormatException e){
-				return 0F;
+		primitives.put("float", new Function<String, Object>() {
+			@Override
+			public Object apply(String v) {
+				try{
+					return Float.parseFloat(v);
+				}catch(NumberFormatException e){
+					return 0F;
+				}
 			}
 		});
 		
-		primitives.put("boolean", (v) -> {
-			return Boolean.parseBoolean(v);
+		primitives.put("boolean", new Function<String, Object>() {
+			@Override
+			public Object apply(String v) {
+				return Boolean.parseBoolean(v);
+			}
 		});
 		
 	}

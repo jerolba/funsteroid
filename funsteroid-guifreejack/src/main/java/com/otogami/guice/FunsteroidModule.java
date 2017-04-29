@@ -82,7 +82,12 @@ public class FunsteroidModule extends AbstractModule {
 		}else if (routeProvider!=null){
 			bind(ResolverChain.class).toProvider(routeProvider);
 		}else{
-			bind(ResolverChain.class).toProvider(()->new ResolverChain());
+			bind(ResolverChain.class).toProvider(new com.google.inject.Provider<ResolverChain>() {
+				@Override
+				public ResolverChain get() {
+					return new ResolverChain();
+				}
+			});
 		}
 		
 		if (macroRegisterInstance!=null){

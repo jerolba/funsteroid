@@ -25,7 +25,7 @@ public class TomcatServer extends ServerConfig<TomcatServer> {
 		Tomcat tomcat = new Tomcat();
 		tomcat.setPort(port);
 		
-		FunsteroidModule funsteroidModule=new FunsteroidModule()
+		final FunsteroidModule funsteroidModule=new FunsteroidModule()
 				.withFilter(filterConfiguration)
 				.withFilter(filter)
 				.withRoutes(route)
