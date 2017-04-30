@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.otogami</groupId>
 		<artifactId>funsteroid</artifactId>
-		<version>0.0.2</version>
+		<version>0.0.3-SNAPSHOT</version>
 	</parent>
 	<artifactId>funsteroid-guifreejack</artifactId>
 	<name>Funsteroid with Guice Freemarker and Jackson</name>
