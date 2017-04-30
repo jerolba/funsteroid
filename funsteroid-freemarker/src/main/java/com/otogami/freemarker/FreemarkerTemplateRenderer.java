@@ -3,6 +3,7 @@ package com.otogami.freemarker;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.Map;
 
@@ -24,8 +25,13 @@ public class FreemarkerTemplateRenderer implements TemplateRendererInterface {
 
 	@Override
 	public void render(String template, Map<String,Object> model, OutputStream os){
-		OutputStreamWriter writer=new OutputStreamWriter(os);
-		render(template,model,writer);
+		OutputStreamWriter writer;
+		try {
+			writer = new OutputStreamWriter(os,"UTF-8");
+			render(template,model,writer);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

@@ -29,6 +29,7 @@ public class DefaultConfigurationProvider implements Provider<Configuration> {
 		FunsteroidFreemarkerConfiguration cfg = new FunsteroidFreemarkerConfiguration(globalVariables, funsteroidMacrosRegister, viewletFactory);
 		cfg.setObjectWrapper(new DefaultObjectWrapper(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS));
 		cfg.setNumberFormat("0");
+		cfg.setDefaultEncoding("UTF-8");
 		cfg.setClassForTemplateLoading(getClass(), "/tpl");
 		if (macroRegister!=null) {
 			macroRegister.accept(cfg);
