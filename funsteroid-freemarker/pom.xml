@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.otogami</groupId>
 		<artifactId>funsteroid</artifactId>
-		<version>0.0.2-APPENGINE</version>
+		<version>0.0.3-APPENGINE</version>
 	</parent>
 	<artifactId>funsteroid-freemarker</artifactId>
 	<name>Funsteroid Freemarker Renderer</name>
@@ -15,7 +15,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
+			<artifactId>freemarker-gae</artifactId>
 			<version>${freemarker.version}</version>
 		</dependency>
 		<dependency>
