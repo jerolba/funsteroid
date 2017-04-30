@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.otogami</groupId>
 	<artifactId>funsteroid</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Funsteroid</name>
 	<description>Otogami web framework</description>
@@ -24,7 +24,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<funsteroid.version>${project.version}</funsteroid.version>
 		<slf4j.version>1.7.12</slf4j.version>
-		<guava.version>18.0</guava.version>
+		<guava.version>20.0</guava.version>
 		<junit.version>4.12</junit.version>
 		<mockito.version>1.10.19</mockito.version>
 	</properties>
