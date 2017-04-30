@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import javax.ws.rs.HttpMethod;
 
 import com.otogami.web.controller.ClassControllerHolder;
 import com.otogami.web.controller.ControllerHolder;
+import com.otogami.web.controller.LambdaClassControllerHolder;
 import com.otogami.web.controller.LambdaController;
 import com.otogami.web.controller.LambdaControllerHolder;
 import com.otogami.web.reflection.ReflectionUtil;
@@ -34,9 +34,14 @@ public class SimpleMapResolver implements RouteResolver {
 	
 	public SimpleMapResolver(String route, String httpMethod, LambdaController controller){
 		this.httpMethod = httpMethod;
-		this.route = new SimpleRoute(route,new LambdaControllerHolder(controller));
+		this.route = new SimpleRoute(route, new LambdaControllerHolder(controller));
 	}
-
+	
+	public SimpleMapResolver(String route, String httpMethod, Class<? extends LambdaController> controller, boolean none){
+		this.httpMethod = httpMethod;
+		this.route = new SimpleRoute(route, new LambdaClassControllerHolder(controller));
+	}
+	
 	public SimpleMapResolver(String route, String httpMethod, Class<?> controller, String method) {
 		Method m=null;
 		if (method!=null){
@@ -178,9 +183,16 @@ public class SimpleMapResolver implements RouteResolver {
 		}
 		
 		public static boolean isDynamic(String route){
-			return Stream.of(findParamNames(split(route)))
-					.filter(str->str!=null)
-					.findAny().isPresent();
+			String[] paramNames = findParamNames(split(route));
+			for (String str : paramNames) {
+				if (str!=null){
+					return true;
+				}
+			}
+//			return Stream.of(findParamNames(split(route))
+//					.filter(str->str!=null)
+//					.findAny().isPresent();
+			return false;
 		}
 		
 		public String getRoute(){

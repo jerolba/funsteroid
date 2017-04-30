@@ -2,10 +2,8 @@ package com.otogami.web.reflection;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -79,16 +77,22 @@ public class ReflectionUtil {
 	}
 	
 	public static List<BindParamInfo> extractParamsInfo(Method method) {
-		return Stream.of(method.getParameters())
-				.map(ReflectionUtil::extractParameterInfo)
-				.collect(Collectors.toList());
+		List<BindParamInfo> res = new ArrayList<>();
+		Class<?>[] parameterTypes = method.getParameterTypes();
+		Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+		for (int i=0;i<parameterTypes.length;i++) {
+			res.add(ReflectionUtil.extractParameterInfo(parameterTypes[i],parameterAnnotations[i]));
+		}
+		return res;
+//		return Stream.of(method.getParameters())
+//				.map(ReflectionUtil::extractParameterInfo)
+//				.collect(Collectors.toList());
 	}
 
-	private static BindParamInfo extractParameterInfo(Parameter parameter){
-		Class<?> paramType = parameter.getType();
+	private static BindParamInfo extractParameterInfo(Class<?> class1, Annotation[] annotations) {
+		Class<?> paramType = class1;
 		BindParamInfo info=new BindParamInfo();
 		info.setParamType(paramType);
-		Annotation[] annotations = parameter.getAnnotations();
 		for (Annotation annotation : annotations) {
 			if (annotation instanceof QueryParam){
 				String id=((QueryParam)annotation).value();
@@ -115,9 +119,10 @@ public class ReflectionUtil {
 				info.setBindFrom(BindFrom.RESPONSE);
 			}
 		}
-		if (info.getParamId()==null){
-			info.setParamId(parameter.getName());
-		}
+		//JDK 1.7 has no param name
+//		if (info.getParamId()==null){
+//			info.setParamId(parameter.getName());
+//		}
 		return info;
 	}
 	

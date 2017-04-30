@@ -15,7 +15,9 @@ public class JaxRsPackageScanResolver extends ResolverChain {
 	public JaxRsPackageScanResolver(String packageName){
 		try {
 			Set<Class<?>> classes = PackageExplorer.getClasses(packageName);
-			classes.stream().forEach(c->addResolver(new JaxRsResolver(c)));
+			for (Class<?> c : classes) {
+				addResolver(new JaxRsResolver(c));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

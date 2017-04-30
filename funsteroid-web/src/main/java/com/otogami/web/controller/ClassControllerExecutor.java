@@ -49,13 +49,18 @@ public class ClassControllerExecutor {
 		}else if (controllerHolder.getType()==HolderType.LambdaHolder){
 			LambdaControllerHolder lambdaController=(LambdaControllerHolder) controllerHolder;
 			return lambdaController.getController().execute(request, response);
+		}else if (controllerHolder.getType()==HolderType.LambdaClassHolder){
+			LambdaClassControllerHolder classController=(LambdaClassControllerHolder) controllerHolder;
+			LambdaController controller=instanceFactory.getInstance(classController.getClassController());
+			return controller.execute(request, response);
 		}
+		
 		return null;
 	}
 	
 	
 	private Object[] createArgs(ServletRequest request, ServletResponse response, Map<String,Object> pathParam, Method method, List<BindParamInfo> bindInfoLst){
-		Object[] params=new Object[method.getParameters().length];
+		Object[] params=new Object[bindInfoLst.size()];
 		int cont=0;
 		for (BindParamInfo bindParamInfo : bindInfoLst) {
 			Object value=extractParam(request, response, pathParam, bindParamInfo);

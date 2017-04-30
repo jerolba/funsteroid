@@ -15,7 +15,7 @@ import com.otogami.web.results.Redirect;
 public class DirectWrite {
 
 	public static void process(OkWithContent result, ServletResponse response) throws IOException{
-		response.getOutputStream().write(result.getContent().getBytes());
+		response.getWriter().print(result.getContent());
 	}
 	
 	public static void process(Redirect result, ServletResponse response){
