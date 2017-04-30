@@ -3,12 +3,16 @@ package com.otogami.web.controller;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 public class ParameterBinder {
 
 	private Map<String,Function<String,Object>> primitives=new HashMap<>();
 	private Map<Class<?>,Function<String,Object>> binders=new HashMap<>();
+	
+	private interface Function<T, R> {
+
+		R apply(T t);
+	}
 	
 	public ParameterBinder(){
 		binders.put(String.class,  new Function<String, Object>() {

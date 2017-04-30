@@ -60,7 +60,7 @@ public class ClassControllerExecutor {
 	
 	
 	private Object[] createArgs(ServletRequest request, ServletResponse response, Map<String,Object> pathParam, Method method, List<BindParamInfo> bindInfoLst){
-		Object[] params=new Object[method.getParameters().length];
+		Object[] params=new Object[bindInfoLst.size()];
 		int cont=0;
 		for (BindParamInfo bindParamInfo : bindInfoLst) {
 			Object value=extractParam(request, response, pathParam, bindParamInfo);
