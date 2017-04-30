@@ -1,6 +1,6 @@
 package com.otogami.freemarker;
 
-import java.io.OutputStream;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,11 +17,13 @@ public class FreemarkerViewRenderer implements TemplateRenderer {
 	@Inject
 	private TemplateRendererInterface freemarkerTemplateRenderer;
 
-	public void render(ModelAndView modelAndView, OutputStream os) {
+	@Override
+	public void render(ModelAndView modelAndView, Writer writer) {
 		Map<String, Object> rootModel = new HashMap<String, Object>();
 		rootModel.putAll(modelAndView.getModel());
 		modelAndView.getModel().put(ROOT_MODEL, new MapWrapper(rootModel));
-		freemarkerTemplateRenderer.render(modelAndView.getTemplate(), modelAndView.getModel(), os);
+		freemarkerTemplateRenderer.render(modelAndView.getTemplate(), modelAndView.getModel(), writer);
 	}
+
 
 }

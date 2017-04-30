@@ -1,9 +1,9 @@
 package com.otogami.web.view;
 
-import java.io.OutputStream;
+import java.io.Writer;
 
 public interface TemplateRenderer {
 
-	void render(ModelAndView modelAndView, OutputStream os);
+	void render(ModelAndView modelAndView, Writer writer);
 	
 }

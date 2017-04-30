@@ -30,12 +30,7 @@ public class ResultDispatcher implements ResultVisitor {
 			response.setStatus(result.getStatus());
 		}
 		TemplateView templateView=injector.getInstance(TemplateView.class);
-		ByteArrayOutputStream baos=new ByteArrayOutputStream(4096);
-		templateView.render(result.getModelAndView(),baos);
-		if (baos.size()>0){
-			OutputStream os=response.getOutputStream();
-			os.write(baos.toByteArray());
-		}
+		templateView.render(result.getModelAndView(),response.getWriter());
 	}
 
 	@Override

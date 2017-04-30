@@ -1,6 +1,5 @@
 package com.otogami.freemarker;
 
-import java.io.OutputStream;
 import java.io.Writer;
 import java.util.Map;
 
@@ -11,8 +10,6 @@ import java.util.Map;
  */
 
 public interface TemplateRendererInterface {
-
-	void render(String template, Map<String, Object> model, OutputStream os);
 
 	void render(String template, Map<String, Object> model, Writer writer);
 
