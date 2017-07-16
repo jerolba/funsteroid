@@ -113,9 +113,9 @@ public class ReflectionUtil {
 			}
 		}
 		if (info.getBindFrom()==null){
-			if (paramType.isAssignableFrom(ServletRequest.class)){
+			if (ServletRequest.class.isAssignableFrom(paramType)){
 				info.setBindFrom(BindFrom.REQUEST);
-			}else if (paramType.isAssignableFrom(ServletResponse.class)){
+			}else if (ServletResponse.class.isAssignableFrom(paramType)){
 				info.setBindFrom(BindFrom.RESPONSE);
 			}
 		}
